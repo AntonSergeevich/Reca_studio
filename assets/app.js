@@ -15,6 +15,7 @@ const LEADS={
 /* ---------- header / drawer ---------- */
 const navLinks=NAV.map(([h,t,k])=>`<a href="${h}"${k===PAGE?' aria-current="page"':""}>${t}</a>`).join("");
 document.body.insertAdjacentHTML("afterbegin",`
+<div class="note-bar"><div class="wrap mono">Концепт дизайна для RECA · не официальный сайт · цены, контакты и имена — примеры</div></div>
 <header class="top"><div class="wrap">
   <a class="logo" href="index.html" aria-label="RECA, на главную"><i></i>RECA</a>
   <nav class="menu" aria-label="Основное меню">${navLinks}</nav>
@@ -54,14 +55,16 @@ document.querySelectorAll("[data-slot=contacts]").forEach(s=>{s.innerHTML=`
 
 /* ---------- footer, sticky CTA, palette, modal ---------- */
 document.body.insertAdjacentHTML("beforeend",`
+<div class="wrap bold-only"><div class="bye">Увидимся<br>на <span>Реке</span></div></div>
 <footer><div class="wrap">
   <div><a class="logo" href="index.html"><i></i>RECA</a><p class="mute" style="margin-top:12px">Музыкальное пространство · ${C.addr}</p></div>
   <nav class="socials" aria-label="Страницы">${NAV.map(([h,t])=>`<a href="${h}">${t}</a>`).join("")}</nav>
   <p class="mono mute">© RECA, 2026 · <a href="#" style="text-decoration:none">Политика конфиденциальности</a></p>
 </div></footer>
 <div class="sticky">${PAGE==="dj"?`<button class="btn primary" data-lead="dj">Бесплатное занятие</button>`:PAGE==="rec"?`<button class="btn primary" data-lead="rec">Записаться</button><a class="btn ink" href="tel:${C.tel}">Позвонить</a>`:`<button class="btn primary" data-lead="hall">Бронь зала</button><button class="btn ink" data-lead="dj">DJ бесплатно</button>`}</div>
-<div class="concept" role="group" aria-label="Палитра под интерьер">
-  <span class="mono mute">Палитра</span>
+<div class="concept" role="group" aria-label="Настройки концепта">
+  <div class="seg-mini" role="group" aria-label="Подача"><button data-s="bold">Смело</button><button data-s="min">Минимал</button></div>
+  <span class="mono mute pal-l">Палитра</span>
   <button data-p="graphite" title="Графит" style="background:#0f1011;box-shadow:inset 0 0 0 6px #ff5a1f"></button>
   <button data-p="concrete" title="Бетон" style="background:#e9e6e0;box-shadow:inset 0 0 0 6px #e2481b"></button>
   <button data-p="wood" title="Дерево" style="background:#141110;box-shadow:inset 0 0 0 6px #d9a35b"></button>
@@ -82,10 +85,14 @@ document.body.insertAdjacentHTML("beforeend",`
 </div></div>`);
 
 const root=document.documentElement;
-function setPal(p){root.dataset.palette=p;document.querySelectorAll(".concept button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===p));try{localStorage.setItem("reca-pal",p)}catch(e){}}
+function setPal(p){root.dataset.palette=p;document.querySelectorAll(".concept [data-p]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===p));try{localStorage.setItem("reca-pal",p)}catch(e){}}
 let saved="graphite";try{saved=localStorage.getItem("reca-pal")||saved}catch(e){}
 setPal(saved);
-document.querySelectorAll(".concept button").forEach(b=>b.onclick=()=>setPal(b.dataset.p));
+document.querySelectorAll(".concept [data-p]").forEach(b=>b.onclick=()=>setPal(b.dataset.p));
+function setStyle(v){root.dataset.style=v;document.querySelectorAll(".concept [data-s]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===v));try{localStorage.setItem("reca-style",v)}catch(e){}}
+let sty=root.dataset.style||"bold";try{sty=localStorage.getItem("reca-style")||sty}catch(e){}
+setStyle(sty);
+document.querySelectorAll(".concept [data-s]").forEach(b=>b.onclick=()=>setStyle(b.dataset.s));
 
 const modal=document.getElementById("modal"),form=document.getElementById("leadForm");
 let lastFocus=null;
@@ -104,8 +111,50 @@ function bindForm(f){f.addEventListener("submit",e=>{e.preventDefault();let ok=t
   if(ok)f.classList.add("sent")})}
 document.querySelectorAll("form.form").forEach(bindForm);
 
+/* ---------- смелый слой: река на canvas, звук, бегущая строка ---------- */
+const hero=document.querySelector(".hero");
+if(hero){
+  const words={home:["DJ-школа","Репетиции","Звукозапись","Бесплатное занятие","До 00:30","Енисей рядом"],dj:["Бит-матчинг","Эквалайзер","Rekordbox","Первый сет","Запись микса","0 ₽ пробное"],
+    halls:["Большой зал","Малый зал","Mesa Boogie","Fender","RCF","Ночной тариф"],rec:["Вокал","Группы","Сведение","Мастеринг","Песня в подарок","DJ-микс"]}[PAGE]||[];
+  const line=words.map(w=>`<span>● ${w}</span>`).join("");
+  hero.insertAdjacentHTML("afterend",`<div class="ticker bold-only" aria-hidden="true"><div>${line+line+line+line}</div></div>`);
+  hero.insertAdjacentHTML("afterbegin",`<canvas class="river bold-only" aria-hidden="true"></canvas>`);
+  hero.querySelector(".hero-foot .btns")?.insertAdjacentHTML("beforeend",`<button class="listen bold-only" aria-pressed="false"><span class="ring">▶</span><span class="lbl">Послушать реку</span></button>`);
+  const cv=hero.querySelector(".river"),cx=cv.getContext("2d"),DPR=Math.min(2,devicePixelRatio||1);
+  let W=0,H=0,t=0,mouse={x:-999,y:-999},an=null,buf=null,on=false,master=null,ac=null;
+  const size=()=>{W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0)};
+  size();addEventListener("resize",size);
+  hero.addEventListener("pointermove",e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top});
+  hero.addEventListener("pointerleave",()=>{mouse.x=mouse.y=-999});
+  const lb=hero.querySelector(".listen");
+  lb&&lb.addEventListener("click",()=>{
+    if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=0;
+      const f=ac.createBiquadFilter();f.type="lowpass";f.frequency.value=900;f.Q.value=6;
+      const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.08;lg.gain.value=600;lfo.connect(lg).connect(f.frequency);lfo.start();
+      [55,82.4,110,164.8,220.6].forEach((fr,i)=>{const o=ac.createOscillator();o.type=i%2?"sawtooth":"triangle";o.frequency.value=fr;o.detune.value=(Math.random()-.5)*14;const g=ac.createGain();g.gain.value=.08/(i+1);o.connect(g).connect(f);o.start()});
+      an=ac.createAnalyser();an.fftSize=1024;buf=new Uint8Array(an.fftSize);f.connect(master);master.connect(an);an.connect(ac.destination)}
+    on=!on;ac.resume();master.gain.cancelScheduledValues(ac.currentTime);master.gain.linearRampToValueAtTime(on?.3:0,ac.currentTime+1.2);
+    lb.setAttribute("aria-pressed",on);lb.querySelector(".ring").textContent=on?"❚❚":"▶";lb.querySelector(".lbl").textContent=on?"Тише":"Послушать реку"});
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (function draw(){
+    if(root.dataset.style==="bold"&&W){
+      if(cv.clientWidth!==W||cv.clientHeight!==H)size();
+      const cs=getComputedStyle(root),ink=cs.getPropertyValue("--ink").trim(),acc=cs.getPropertyValue("--accent").trim();
+      cx.clearRect(0,0,W,H);let amp=0;
+      if(on&&an){an.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i+=8)s+=Math.abs(buf[i]-128);amp=s/(buf.length/8)/40}
+      const N=13;
+      for(let k=0;k<N;k++){const base=H*.12+k*(H*.8/N),ph=k*.55;cx.beginPath();
+        for(let x=0;x<=W;x+=6){const near=Math.max(0,1-Math.hypot(x-mouse.x,base-mouse.y)/260);
+          let y=base+Math.sin(x*.004+t*.6+ph)*16+Math.sin(x*.011-t*.9+ph*2)*7*(1+amp*4)+Math.sin(x*.05-t*5)*near*26;
+          if(on&&buf)y+=(buf[Math.floor(x/W*(buf.length-1))]-128)*.45*(1-k/N);
+          x?cx.lineTo(x,y):cx.moveTo(x,y)}
+        const hot=k===Math.floor(N*.62);cx.globalAlpha=hot?.95:.08+.14*(k/N);cx.strokeStyle=hot?acc:ink;cx.lineWidth=hot?2:1;cx.stroke()}
+      cx.globalAlpha=1;if(!reduce)t+=.016}
+    requestAnimationFrame(draw)})();
+}
+
 /* ---------- волна в hero ---------- */
-document.querySelectorAll("svg.wave").forEach(svg=>{
+document.querySelectorAll("svg.wave").forEach(svg=>{svg.classList.add("min-only");
   const W=1200,H=120,N=5,paths=[];svg.setAttribute("viewBox",`0 0 ${W} ${H}`);svg.setAttribute("preserveAspectRatio","none");
   for(let i=0;i<N;i++){const p=document.createElementNS("http://www.w3.org/2000/svg","path");if(i===2)p.classList.add("hot");svg.appendChild(p);paths.push(p)}
   let t=0,mx=-1;svg.parentElement.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();mx=(e.clientX-r.left)/r.width*W});
