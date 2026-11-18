@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru" data-palette="graphite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Репетиционные залы в Красноярске — RECA</title>
+<meta name="description" content="Репетиционная база в центре Красноярска: два зала с бэклайном, онлайн-бронь, работаем до полуночи.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="halls">
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow mono mute"><span class="dot"></span> Репетиционные залы · 10:00–00:30</div>
+    <h1>Залы, где<br>звучит <span class="acc">громко</span></h1>
+    <div class="hero-foot">
+      <p class="lead">Два зала с барабанами, комбиками и пультом. Видно свободное время — бронируйте онлайн за полминуты.</p>
+      <div class="btns"><a class="btn primary" href="#book">Выбрать время <span class="arr">→</span></a><button class="btn" data-lead="hall">Оставить заявку</button></div>
+    </div>
+    <svg class="wave" aria-hidden="true"></svg>
+  </section>
+
+  <section class="wrap" style="padding-top:0">
+    <div class="halls">
+      <article class="hall reveal">
+        <div class="photo"><span class="ph mono"><span>Большой зал, общий план</span></span></div>
+        <div class="body">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><h3 style="font-size:30px">Большой зал</h3><span class="mono mute">≈ 40 м²</span></div>
+          <p class="mute">Для групп до 7 человек. Цифровой пульт на 18 каналов, акустика RCF, мониторы.</p>
+          <div class="chips"><span class="chip">Ударная установка</span><span class="chip">Mesa Boogie</span><span class="chip">Fender</span><span class="chip">Ashdown</span></div>
+          <div class="tariff"><div><b>450 ₽</b><span class="mono mute">час, днём</span></div><div><b>600 ₽</b><span class="mono mute">после 22:00</span></div></div>
+          <button class="btn primary" data-lead="hall" data-note="Большой зал">Забронировать</button>
+        </div>
+      </article>
+      <article class="hall reveal">
+        <div class="photo"><span class="ph mono"><span>Малый зал, общий план</span></span></div>
+        <div class="body">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><h3 style="font-size:30px">Малый зал</h3><span class="mono mute">≈ 25 м²</span></div>
+          <p class="mute">Для дуэтов, трио и сольных занятий: барабаны, вокал, гитара.</p>
+          <div class="chips"><span class="chip">Ударная установка</span><span class="chip">Vox</span><span class="chip">Вокальные микрофоны</span></div>
+          <div class="tariff"><div><b>400 ₽</b><span class="mono mute">час, днём</span></div><div><b>500 ₽</b><span class="mono mute">после 22:00</span></div></div>
+          <button class="btn primary" data-lead="hall" data-note="Малый зал">Забронировать</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="book">
+    <div class="head reveal"><h2>Онлайн-бронь</h2><p class="lead">Нажмите на свободный час или протяните по нескольким. Серым — уже занято.</p></div>
+    <div class="daw reveal">
+      <div class="days" id="days"></div>
+      <div class="tl-scroll"><div class="tl" id="tl" data-halls='[{"name":"Большой","day":450,"night":600,"nightFrom":22},{"name":"Малый","day":400,"night":500,"nightFrom":22}]'></div></div>
+      <div class="summary">
+        <div><div class="mono mute" style="margin-bottom:6px">Ваша бронь</div><div class="what" id="selText"></div></div>
+        <div class="legend mono"><span><i style="background:var(--line)"></i>Занято</span><span><i style="background:var(--accent)"></i>Выбрано</span><span><i style="background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 6px)"></i>Ночной тариф</span></div>
+        <button class="btn primary" id="bookBtn" data-lead="hall" disabled>Забронировать <span class="arr">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="head reveal"><h2>Что в залах</h2></div>
+    <div class="steps reveal">
+      <div class="step"><h3>Гитара и бас</h3><p class="mute">Mesa Boogie, Fender, Vox, Ashdown.</p></div>
+      <div class="step"><h3>Барабаны</h3><p class="mute">Полная установка в каждом зале. Тарелки можно свои.</p></div>
+      <div class="step"><h3>Звук</h3><p class="mute">Цифровой пульт, RCF, мониторы, вокальные микрофоны.</p></div>
+      <div class="step"><h3>Комфорт</h3><p class="mute">Кондиционер, вентиляция, кофе за 50 ₽.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="head reveal"><h2>Правила</h2></div>
+    <div class="reveal">
+      <details><summary>Как отменить или перенести бронь?</summary><p>Бесплатно — за 48 часов. Позже — оплачивается 50% времени.</p></details>
+      <details><summary>Шнуры есть?</summary><p>Микрофонные — да. Инструментальные кабели для гитар и клавиш берите свои.</p></details>
+      <details><summary>Можно записать репетицию?</summary><p>Да, пульт пишет по каналам. Стоимость записи — на странице «Звукозапись».</p></details>
+    </div>
+  </section>
+
+  <section data-slot="contacts"></section>
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

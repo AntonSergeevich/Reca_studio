@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru" data-palette="graphite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Студия звукозаписи в Красноярске — RECA</title>
+<meta name="description" content="Запись вокала и инструментов, сведение, песня в подарок. Студия звукозаписи RECA в центре Красноярска.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="rec">
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow mono mute"><span class="dot"></span> Студия звукозаписи</div>
+    <h1>Ваш звук —<br><span class="acc">в лучшем виде</span></h1>
+    <div class="hero-foot">
+      <p class="lead">Запись вокала и инструментов, сведение и мастеринг. Звукорежиссёр поможет довести трек до релиза.</p>
+      <div class="btns"><button class="btn primary" data-lead="rec">Записаться на студию <span class="arr">→</span></button><a class="btn" href="#works">Послушать работы</a></div>
+    </div>
+    <svg class="wave" aria-hidden="true"></svg>
+  </section>
+
+  <section class="wrap" style="padding-top:0">
+    <div class="gallery reveal" style="grid-auto-rows:clamp(140px,16vw,240px)">
+      <div class="photo g1"><span class="ph mono"><span>Аппаратная, мониторы</span></span></div>
+      <div class="photo g2"><span class="ph mono"><span>Микрофон и поп-фильтр</span></span></div>
+      <div class="photo g3"><span class="ph mono"><span>Звукорежиссёр за работой</span></span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="head reveal"><h2>Услуги и цены</h2><p class="lead">Цены демо — уточнить у студии.</p></div>
+    <div class="rows reveal">
+      <div class="rowi"><span class="mono n">01</span><div><h3>Запись вокала</h3><p>Профессиональный микрофон, помощь с подачей и дублями.</p></div><span class="price">800 ₽/ч</span></div>
+      <div class="rowi"><span class="mono n">02</span><div><h3>Запись инструментов и групп</h3><p>Живые барабаны, гитары, клавиши. Мультитрек.</p></div><span class="price">800 ₽/ч</span></div>
+      <div class="rowi"><span class="mono n">03</span><div><h3>Сведение и мастеринг</h3><p>Доведём запись до звучания, готового к релизу на площадках.</p></div><span class="price">от 3 000 ₽</span></div>
+      <div class="rowi"><span class="mono n">04</span><div><h3>Песня в подарок</h3><p>Свадьбы, юбилеи, дни рождения. Педагог по вокалу поможет бесплатно.</p></div><span class="price">от 1 500 ₽</span></div>
+      <div class="rowi"><span class="mono n">05</span><div><h3>Запись DJ-микса</h3><p>Для выпускников DJ-школы и диджеев города.</p></div><span class="price">от 1 000 ₽</span></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="works">
+    <div class="head reveal"><h2>Работы</h2><p class="lead">Здесь будут реальные треки, записанные в RECA. Сейчас — звуковые заглушки.</p></div>
+    <div class="tracks reveal">
+      <div class="trk"><button class="pl" aria-label="Слушать">▶</button><div><div style="font-weight:600">Название трека — Исполнитель</div><canvas></canvas></div><span class="mono mute">Рок</span></div>
+      <div class="trk"><button class="pl" aria-label="Слушать">▶</button><div><div style="font-weight:600">Название трека — Исполнитель</div><canvas></canvas></div><span class="mono mute">Поп</span></div>
+      <div class="trk"><button class="pl" aria-label="Слушать">▶</button><div><div style="font-weight:600">Название трека — Исполнитель</div><canvas></canvas></div><span class="mono mute">Хип-хоп</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="head reveal"><h2>Как проходит запись</h2></div>
+    <div class="steps reveal">
+      <div class="step"><h3>Заявка</h3><p class="mute">Рассказываете идею, мы считаем время и стоимость.</p></div>
+      <div class="step"><h3>Подготовка</h3><p class="mute">Обсуждаем референсы, аранжировку и тональность.</p></div>
+      <div class="step"><h3>Запись</h3><p class="mute">Пишем дубли в комфортном темпе, без спешки.</p></div>
+      <div class="step"><h3>Готовый трек</h3><p class="mute">Сведение, мастеринг и файлы для релиза.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="band reveal">
+      <div><span class="mono" style="color:var(--accent)">Заявка</span><h2 style="margin-top:16px">Расскажите, что хотите записать</h2><p class="lead" style="margin-top:16px">Ответим с расчётом стоимости в течение часа.</p></div>
+      <form class="form" aria-label="Заявка на запись">
+        <div class="seg" role="group" aria-label="Что записываем"><label><input type="radio" name="w" checked><span>Вокал</span></label><label><input type="radio" name="w"><span>Группа</span></label><label><input type="radio" name="w"><span>Подарок</span></label></div>
+        <div class="row2"><div class="field"><label for="r1n">Имя</label><input id="r1n" required autocomplete="name"></div>
+        <div class="field"><label for="r1c">Телефон или @telegram</label><input id="r1c" required autocomplete="tel"></div></div>
+        <div class="field"><label for="r1m">Идея или ссылка на референс</label><textarea id="r1m"></textarea></div>
+        <button class="btn primary" type="submit">Отправить заявку <span class="arr">→</span></button>
+        <p class="consent">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+        <div class="ok"><div style="font-size:44px">✓</div><h3>Заявка отправлена</h3><p class="mute">Скоро пришлём расчёт.</p></div>
+      </form>
+    </div>
+  </section>
+
+  <section data-slot="contacts"></section>
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>
