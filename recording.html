@@ -18,7 +18,7 @@
     <h1>Ваш звук —<br><span class="acc">в лучшем виде</span></h1>
     <div class="hero-foot">
       <p class="lead">Запись вокала и инструментов, сведение и мастеринг. Звукорежиссёр поможет довести трек до релиза.</p>
-      <div class="btns"><button class="btn primary" data-lead="rec">Записаться на студию <span class="arr">→</span></button><a class="btn" href="#works">Послушать работы</a></div>
+      <div class="btns"><a class="btn primary" href="#book">Забронировать студию <span class="arr">→</span></a><a class="btn" href="#works">Послушать работы</a></div>
     </div>
     <svg class="wave" aria-hidden="true"></svg>
   </section>
@@ -40,6 +40,11 @@
       <div class="rowi"><span class="mono n">04</span><div><h3>Песня в подарок</h3><p>Свадьбы, юбилеи, дни рождения. Педагог по вокалу поможет бесплатно.</p></div><span class="price">от 1 500 ₽</span></div>
       <div class="rowi"><span class="mono n">05</span><div><h3>Запись DJ-микса</h3><p>Для выпускников DJ-школы и диджеев города.</p></div><span class="price">от 1 000 ₽</span></div>
     </div>
+  </section>
+
+  <section class="wrap" id="book">
+    <div class="head reveal"><h2>Бронь студии</h2><p class="lead">Выберите день и время записи. Звукорежиссёр включён в стоимость часа.</p></div>
+    <div class="reveal" data-booking="studio"></div>
   </section>
 
   <section class="wrap" id="works">
@@ -79,5 +84,6 @@
   <section data-slot="contacts"></section>
 </main>
 <script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

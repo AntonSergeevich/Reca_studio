@@ -48,17 +48,14 @@
     </div>
   </section>
 
+  <section class="wrap">
+    <div class="head reveal"><h2>Пульт цен</h2><p class="lead">Каждое помещение — канал на пульте. Двигайте фейдер: часы и сумма считаются сразу. Кнопка канала переносит выбор в бронь.</p></div>
+    <div class="reveal" data-mixer="big,small,dj"></div>
+  </section>
+
   <section class="wrap" id="book">
-    <div class="head reveal"><h2>Онлайн-бронь</h2><p class="lead">Нажмите на свободный час или протяните по нескольким. Серым — уже занято.</p></div>
-    <div class="daw reveal">
-      <div class="days" id="days"></div>
-      <div class="tl-scroll"><div class="tl" id="tl" data-halls='[{"name":"Большой","day":450,"night":600,"nightFrom":22},{"name":"Малый","day":400,"night":500,"nightFrom":22}]'></div></div>
-      <div class="summary">
-        <div><div class="mono mute" style="margin-bottom:6px">Ваша бронь</div><div class="what" id="selText"></div></div>
-        <div class="legend mono"><span><i style="background:var(--line)"></i>Занято</span><span><i style="background:var(--accent)"></i>Выбрано</span><span><i style="background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 6px)"></i>Ночной тариф</span></div>
-        <button class="btn primary" id="bookBtn" data-lead="hall" disabled>Забронировать <span class="arr">→</span></button>
-      </div>
-    </div>
+    <div class="head reveal"><h2>Онлайн-бронь</h2><p class="lead">Помещение, день, время — и готово. Свободные часы видны сразу, подтверждение приходит в Telegram.</p></div>
+    <div class="reveal" data-booking="big"></div>
   </section>
 
   <section class="wrap">
@@ -83,5 +80,6 @@
   <section data-slot="contacts"></section>
 </main>
 <script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

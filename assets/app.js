@@ -164,43 +164,6 @@ document.querySelectorAll("svg.wave").forEach(svg=>{svg.classList.add("min-only"
       d+=(x?"L":"M")+x+" "+y.toFixed(1)}p.setAttribute("d",d)});t+=.012;if(!reduce)requestAnimationFrame(f)})();
 });
 
-/* ---------- бронь-таймлайн (страница залов) ---------- */
-const tl=document.getElementById("tl");
-if(tl){
-  const HALLS=JSON.parse(tl.dataset.halls),HOURS=[...Array(14)].map((_,i)=>10+i);
-  const daysEl=document.getElementById("days");let dayIdx=0,sel=null,busy=[],drag=null;
-  const dates=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()+i);return d});
-  const fmtN=d=>d.getDate()+" "+d.toLocaleDateString("ru-RU",{month:"short"}).replace(".","");
-  dates.forEach((d,i)=>{const b=document.createElement("button");b.className="day"+(i?"":" on");
-    b.innerHTML=`<span class="mono">${i===0?"сегодня":i===1?"завтра":d.toLocaleDateString("ru-RU",{weekday:"short"})}</span><b>${fmtN(d)}</b>`;
-    b.onclick=()=>{dayIdx=i;sel=null;daysEl.querySelectorAll(".day").forEach((x,j)=>x.classList.toggle("on",j===i));render()};daysEl.appendChild(b)});
-  const rnd=s=>()=>(s=s*16807%2147483647)/2147483647;
-  function busyFor(hi){const r=rnd(dates[dayIdx].getDate()*31+hi*7+1),b=new Set();let h=0;
-    while(h<14){if(r()<.28){const len=2+Math.floor(r()*2);for(let k=0;k<len&&h+k<14;k++)b.add(h+k);h+=len+1}else h++}return b}
-  function render(){busy=HALLS.map((_,i)=>busyFor(i));
-    tl.innerHTML=`<div class="hd"></div>`+HOURS.map(h=>`<div class="hd mono">${h}:00</div>`).join("");
-    HALLS.forEach((h,hi)=>{tl.insertAdjacentHTML("beforeend",`<div class="name">${h.name}<small>${h.day} ₽/ч</small></div>`);
-      HOURS.forEach((hr,ci)=>{tl.insertAdjacentHTML("beforeend",`<div class="cell${hr>=h.nightFrom?" night":""}${busy[hi].has(ci)?" busy":""}" data-h="${hi}" data-c="${ci}"></div>`)})});
-    paint()}
-  function paint(){tl.querySelectorAll(".cell").forEach(c=>{const hi=+c.dataset.h,ci=+c.dataset.c,B=busy[hi];c.classList.remove("sel","s","e");
-      if(B.has(ci)){B.has(ci-1)||c.classList.add("s");B.has(ci+1)||c.classList.add("e");return}
-      if(sel&&sel.h===hi&&ci>=sel.a&&ci<=sel.b){c.classList.add("sel");ci===sel.a&&c.classList.add("s");ci===sel.b&&c.classList.add("e")}});
-    const txt=document.getElementById("selText"),btn=document.getElementById("bookBtn");
-    if(!sel){txt.textContent="Нажмите или протяните по свободным часам";btn.disabled=true;btn.style.opacity=.4;return}
-    const h=HALLS[sel.h];let sum=0;for(let i=sel.a;i<=sel.b;i++)sum+=HOURS[i]>=h.nightFrom?h.night:h.day;const n=sel.b-sel.a+1;
-    txt.textContent=`${h.name} · ${fmtN(dates[dayIdx])} · ${HOURS[sel.a]}:00–${HOURS[sel.b]+1}:00 · ${sum.toLocaleString("ru-RU")} ₽`;
-    btn.disabled=false;btn.style.opacity=1;btn.dataset.note=`${txt.textContent} (${n} ч)`}
-  tl.addEventListener("pointerdown",e=>{const c=e.target.closest(".cell");if(!c||c.classList.contains("busy"))return;
-    drag={h:+c.dataset.h,from:+c.dataset.c};sel={h:drag.h,a:drag.from,b:drag.from};paint()});
-  addEventListener("pointermove",e=>{if(!drag)return;const c=document.elementFromPoint(e.clientX,e.clientY)?.closest?.(".cell");if(!c)return;
-    const to=+c.dataset.c;let a=Math.min(drag.from,to),b=Math.max(drag.from,to);
-    for(let i=drag.from;i>=a;i--)if(busy[drag.h].has(i)){a=i+1;break}
-    for(let i=drag.from;i<=b;i++)if(busy[drag.h].has(i)){b=i-1;break}
-    sel={h:drag.h,a,b};paint()});
-  addEventListener("pointerup",()=>drag=null);
-  render();
-}
-
 /* ---------- плеер примеров (звукозапись) ---------- */
 let actx,cur=null;
 document.querySelectorAll(".trk").forEach((el,idx)=>{

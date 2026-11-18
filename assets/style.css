@@ -273,3 +273,93 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* блоки видны сразу, анимация только сдвигом */
 .reveal{opacity:1}
+
+/* ===== микшерный пульт ===== */
+.mixer{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(232px,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:calc(var(--r) + 8px);overflow-x:auto;scrollbar-width:thin}
+.ch{background:var(--card);padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.ch-top{display:flex;justify-content:space-between;color:var(--mute)}
+.ch-kind{color:var(--accent)}
+.ch h3{font-size:24px}
+.knobs{display:flex;gap:12px}
+.knob-l{display:flex;flex-direction:column;align-items:center;gap:6px}
+.knob-l .mono{font-size:9px;color:var(--mute)}
+.knob{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4a4f53,#16181a 70%);border:1px solid #3a3e41;box-shadow:0 4px 10px #0006;position:relative}
+.knob::after{content:"";position:absolute;left:50%;top:4px;width:2px;height:11px;border-radius:1px;background:#f2eee6;transform-origin:50% 16px;transform:translateX(-50%) rotate(var(--r,0deg))}
+.mode{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.mode button{flex:1;padding:7px 8px;border-radius:999px;font-size:13px;color:var(--mute)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.mode button:disabled{opacity:.45;cursor:default}
+.strip{display:flex;gap:14px;align-items:stretch}
+.meters{display:flex;gap:4px}
+.meter{display:block;width:8px;height:230px;border-radius:3px;background:var(--bg);position:relative;overflow:hidden}
+.meter b{position:absolute;inset:auto 0 0 0;height:30%;background:linear-gradient(to top,#7fd36a 0 62%,#f0cf4a 62% 84%,var(--accent) 84%);background-size:100% 230px;background-position:bottom;transition:height .1s}
+.fader{position:relative;width:64px;height:230px;touch-action:none;cursor:ns-resize;flex:0 0 auto}
+.fader .scale{position:absolute;left:0;top:10px;bottom:10px;display:flex;flex-direction:column;justify-content:space-between;font-size:9px;color:var(--mute)}
+.fader .scale span{line-height:0}
+.fader .scale span::after{content:"";display:inline-block;width:8px;height:1px;background:var(--line);vertical-align:middle;margin-left:4px}
+.fader .slot{position:absolute;left:38px;top:10px;bottom:10px;width:6px;transform:translateX(-50%);background:var(--bg);border-radius:3px;box-shadow:inset 0 1px 3px #0009}
+.fader .cap{position:absolute;left:38px;width:46px;height:28px;transform:translate(-50%,-50%);border-radius:5px;background:linear-gradient(#5a5f62,#2a2d2f 45%,#1e2022 55%,#3a3e41);border:1px solid #63686b;box-shadow:0 6px 12px #0008;transition:top .12s}
+.fader .cap::after{content:"";position:absolute;left:4px;right:4px;top:50%;height:2px;margin-top:-1px;background:var(--accent)}
+.fader.drag .cap{transition:none}
+.fader:focus-visible .cap{outline:2px solid var(--accent);outline-offset:2px}
+.readout{display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-width:0}
+.readout .mono{color:var(--mute)}
+.readout b{font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
+[data-style="bold"] .readout b{font-family:var(--logo);font-weight:800;letter-spacing:-.05em}
+.ch-go{margin-top:auto}
+
+/* ===== виджет брони ===== */
+.booking{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,360px);gap:16px;align-items:start}
+@media(max-width:1020px){.booking{grid-template-columns:minmax(0,1fr)}}
+.bk-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.bk-step{background:var(--card);border-radius:calc(var(--r) + 4px);padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.bk-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bk-n{width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:600;font-size:14px}
+.bk-hint{margin-left:auto}
+@media(max-width:600px){.bk-hint{margin-left:0;flex-basis:100%}}
+.rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.room{border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:4px;transition:.2s}
+.room .mono{font-size:10px;color:var(--mute)}
+.room b{font-size:17px}
+.room:hover{border-color:var(--mute)}
+.room[aria-checked="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.room[aria-checked="true"] .mono{color:var(--accent)}
+.booking .days{padding:0;border:0}
+.day .ld{display:block;height:3px;border-radius:2px;background:var(--line);margin-top:8px;overflow:hidden}
+.day .ld i{display:block;height:100%;background:var(--accent)}
+.day.on .ld{background:color-mix(in srgb,var(--bg) 30%,transparent)}
+.day.on .ld i{background:var(--bg)}
+.booking .tl-scroll{border:1px solid var(--line);border-radius:16px}
+.booking .tl{grid-template-columns:110px repeat(14,minmax(46px,1fr));min-width:760px}
+.booking .tl .name{cursor:pointer;color:var(--mute);transition:color .2s}
+.booking .tl .name.on{color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}
+.booking .cell{height:52px}
+.booking .cell.dim{opacity:.45}
+.booking .cell:not(.busy):not(.dim):hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.bk-pick{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:flex-start}
+.bk-pick>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.bk-pick>div:first-child{flex:1}
+.slots{display:flex;flex-wrap:wrap;gap:6px}
+.slot-chip{padding:8px 12px;border-radius:10px;border:1px solid var(--line);font-variant-numeric:tabular-nums;font-size:15px}
+.slot-chip:hover{border-color:var(--mute)}
+.slot-chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.stepper button{width:44px;height:44px;font-size:20px}
+.stepper output{min-width:80px;text-align:center;font-weight:600}
+.lg-night{background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 6px)}
+.bk-sum{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));background:var(--bg2);border:1px solid var(--line);border-radius:calc(var(--r) + 4px);padding:22px;display:flex;flex-direction:column;gap:16px}
+.bk-sum dl{display:flex;flex-direction:column}
+.bk-sum dl div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.bk-sum dt{color:var(--mute)}
+.bk-sum dd{text-align:right;font-weight:600}
+.ext{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;cursor:pointer;padding:12px;border:1px dashed var(--line);border-radius:14px}
+.ext input{accent-color:var(--accent);width:18px;height:18px}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total b{font-size:34px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+[data-style="bold"] .total b{font-family:var(--logo);font-weight:800;letter-spacing:-.05em}
+.bk-form{display:flex;flex-direction:column;gap:10px}
+.bk-form .btn:disabled{opacity:.45;cursor:not-allowed}
+.bk-ok{display:flex;flex-direction:column;gap:12px}
+@media(max-width:1020px){.bk-sum{position:static}}
+.booking .cell.busy::before{background:color-mix(in srgb,var(--ink) 16%,var(--card))}
+.readout b{font-size:clamp(22px,2vw,28px);white-space:nowrap}
